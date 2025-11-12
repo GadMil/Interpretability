@@ -13,15 +13,8 @@ import json
 import itertools
 import math
 import tifffile as tiff
-
 import tensorflow as tf
-try:
-    from tensorflow import keras
-    from tensorflow.keras import layers, models, metrics
-except ImportError as e:
-    print(f"Failed to import Keras: {e}")
-from keras.models import load_model
-
+from tensorflow.keras.models import load_model
 import cv2
 
 from torchvision.models.video import r3d_18
