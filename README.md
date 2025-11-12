@@ -54,17 +54,21 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
 ## Quick Start
 
 ```bash
-# Single-cell confidence model
-cd single_cell
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python train.py --config configs/base.yaml
+# Clone the repository
+git clone https://github.com/GadMil/Interpretability
+cd Interpretability
 
-# Interpretability (Mask Interpreter)
+# --- Single-cell model ---
+cd single_cell
+conda create -n single_cell python=3.9.15
+conda activate single_cell
+pip install -r requirements_windows.txt
+
+# --- Confidence model ---
 cd ../interpretability
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python train.py --config configs/base.yaml
+conda create -n confidence python=3.10.14
+conda activate confidence
+pip install -r requirements_windows.txt
 ```
 
 ---
