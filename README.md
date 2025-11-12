@@ -54,17 +54,17 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
 ## Quick Start
 
 ```bash
-# Single-cell confidence model
-cd single_cell
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python train.py --config configs/base.yaml
+# Clone the repository
+git clone <repo_url>
+cd <repo_name>
 
-# Interpretability (Mask Interpreter)
-cd ../interpretability
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python train.py --config configs/base.yaml
+# --- Single-cell model ---
+cd single_cell
+pip install -r requirements_windows.txt
+
+# --- Confidence model ---
+cd interpretability
+pip install -r requirements_windows.txt
 ```
 
 ---
