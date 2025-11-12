@@ -65,7 +65,7 @@ conda activate single_cell
 pip install -r requirements_windows.txt
 
 # --- Confidence model ---
-cd interpretability
+cd ../interpretability
 conda create -n confidence python=3.10.14
 conda activate confidence
 pip install -r requirements_windows.txt
