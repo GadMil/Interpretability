@@ -55,15 +55,19 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
 
 ```bash
 # Clone the repository
-git clone <repo_url>
-cd <repo_name>
+git clone https://github.com/GadMil/Interpretability
+cd Interpretability
 
 # --- Single-cell model ---
 cd single_cell
+conda create -n single_cell python=3.9.15
+conda activate single_cell
 pip install -r requirements_windows.txt
 
 # --- Confidence model ---
 cd interpretability
+conda create -n confidence python=3.10.14
+conda activate confidence
 pip install -r requirements_windows.txt
 ```
 
