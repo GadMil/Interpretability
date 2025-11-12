@@ -389,14 +389,14 @@ class ResNet3DRegression(nn.Module):
         return x
 
 # Define base path for all operations
-BASE_PATH = os.getcwd()
+BASE_PATH = os.path.dirname(os.getcwd())
 
 # Variable Paths
 organelle = sys.argv[1]
-unet_model_path = f"{BASE_PATH}/ISL_Models/Unet/{organelle}/"
-mg_model_path = f"{BASE_PATH}/ISL_Models/MG/{organelle}/"
-train_csv_path = "/sise/assafzar-group/assafzar/full_cells_fovs/train_test_list/{}/image_list_train.csv".format(organelle)
-test_csv_path = "/sise/assafzar-group/assafzar/full_cells_fovs/train_test_list/{}/image_list_test.csv".format(organelle)
+unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/"
+mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/"
+train_csv_path = f"{BASE_PATH}/data/{organelle}/image_list_train.csv"
+test_csv_path = f"{BASE_PATH}/data/{organelle}/image_list_test.csv"
 
 # Variables for training
 input_channel=0
@@ -485,7 +485,7 @@ for params in grid_search_params:
     elif optimizer[0] == 'sgd':
         params_text = f"best_lr_{lr}_batch_size_{batch_size}_optimizer_{optimizer[0]}_momentum_{optimizer[2]}_use_batchnorm_{use_batchnorm}_use_dropout_{use_dropout}"
 
-    path = f"{BASE_PATH}/ISL/experiments_Mask_Pred/{organelle}/{params_text}"
+    path = f"{BASE_PATH}/models/confidence/{organelle}/{params_text}"
     if not os.path.exists(path):
         os.makedirs(path)
     else:
@@ -625,5 +625,5 @@ for params in grid_search_params:
 
     with open(f'{path}/meta_data.json', 'w') as f:
         f.write(json.dumps(meta_data, indent=4))
-    with open(f'{BASE_PATH}/ISL/experiments_Mask_Pred/{organelle}/current_top_5.json', 'w') as f:
+    with open(f'{BASE_PATH}/models/confidence/{organelle}/current_top_5.json', 'w') as f:
         f.write(json.dumps(sorted(top_5_loss, reverse=False, key=lambda x: x[0])[:5], indent=4))

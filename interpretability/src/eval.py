@@ -328,18 +328,16 @@ class ResNet3DRegression(nn.Module):
 
 
 # Define base path for all operations
-BASE_PATH = os.getcwd()
+BASE_PATH = os.path.dirname(os.getcwd())
 
 # Variable Paths
-# organelles = ["Mitochondria", "Nucleolus-(Granular-Component)", "Nuclear-envelope", "Actin-filaments", "Microtubules",
-#               "Plasma-membrane", "Endoplasmic-reticulum", "DNA"]
-organelles = ["DNA"]
+organelles = ["Mitochondria", "Nucleolus-(Granular-Component)", "Nuclear-envelope", "Actin-filaments", "Microtubules",
+              "Plasma-membrane", "Endoplasmic-reticulum", "DNA"]
 for organelle in organelles:
-    unet_model_path = f"{BASE_PATH}/ISL_Models/Unet/{organelle}/"
-    mg_model_path = f"{BASE_PATH}/ISL_Models/MG/{organelle}/"
-    conf_model_path = f"{BASE_PATH}/ISL/experiments_Mask_Pred/{organelle}/best_lr_1e-05_batch_size_16_optimizer_adam_weight_decay_0.01_use_batchnorm_True_use_dropout_False/model.pt"
-    train_csv_path = "/sise/assafzar-group/assafzar/full_cells_fovs/train_test_list/{}/image_list_train.csv".format(organelle)
-    test_csv_path = "/sise/assafzar-group/assafzar/full_cells_fovs/train_test_list/{}/image_list_test.csv".format(organelle)
+    unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/"
+    mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/"
+    conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/best_lr_1e-05_batch_size_16_optimizer_adam_weight_decay_0.01_use_batchnorm_True_use_dropout_False/model.pt"
+    test_csv_path = f"{BASE_PATH}/data/{organelle}/image_list_test.csv"
 
     input_channel=0
     if organelle == "DNA":
