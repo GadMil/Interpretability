@@ -124,7 +124,7 @@ BASE_PATH = os.path.dirname(os.getcwd())
 organelle = sys.argv[1]
 unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/"
 mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/"
-conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/best_lr_1e-05_batch_size_16_optimizer_adam_weight_decay_0.01_use_batchnorm_True_use_dropout_False/model.pt"
+conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/model.pt"
 test_csv_path = f"{BASE_PATH}/data/{organelle}/image_list_test.csv"
 
 input_channel=0
@@ -234,4 +234,4 @@ for path in test_csv['path_tiff']:
 
     # Stack into one (3, Z, X, Y) array
     stack = np.stack([prediction, importance_map, confidence_map], axis=0)
-    tiff.imwrite(f"{BASE_PATH}/Inference/{organelle}/image_{image_num}_inference_outputs.tiff", stack.astype(np.float32))
+    tiff.imwrite(f"{BASE_PATH}/inference/{organelle}/image_{image_num}_inference_outputs.tiff", stack.astype(np.float32))

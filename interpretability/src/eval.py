@@ -336,7 +336,7 @@ organelles = ["Mitochondria", "Nucleolus-(Granular-Component)", "Nuclear-envelop
 for organelle in organelles:
     unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/"
     mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/"
-    conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/best_lr_1e-05_batch_size_16_optimizer_adam_weight_decay_0.01_use_batchnorm_True_use_dropout_False/model.pt"
+    conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/model.pt"
     test_csv_path = f"{BASE_PATH}/data/{organelle}/image_list_test.csv"
 
     input_channel=0
@@ -378,43 +378,15 @@ for organelle in organelles:
     error_predictions = []
     errors = []
 
-    if organelle == "Nuclear-envelope":
-        for j in range(1, 11):
-            test_data = RegressionTestDataset(
-                f"{BASE_PATH}/Regression/NE_Test_Images/image_list_NE_Test_{j}.csv", transform=test_transforms,
-                indices=indices)
-
-            for i in range(len(test_data)):
-                img, err, ip, tp = test_data[i]
-                errors.append(err.numpy()[0])
-                img = torch.from_numpy(np.expand_dims(img, axis=0)).float()
-                pred = conf_model(img)
-                error_predictions.append(float(pred))
-
-    elif organelle == "Microtubules":
-        for j in range(1, 7):
-            test_data = RegressionTestDataset(
-                f"{BASE_PATH}/Regression/Micro_Test_Images/image_list_Micro_Test_{j}.csv",
-                transform=test_transforms, indices=indices)
-
-            for i in range(len(test_data)):
-                img, err, ip, tp = test_data[i]
-                errors.append(err.numpy()[0])
-                img = torch.from_numpy(np.expand_dims(img, axis=0)).float()
-                pred = conf_model(img)
-                error_predictions.append(float(pred))
-
-    else:
-        for i in range(len(test_data)):
-            img, err, ip, tp = test_data[i]
-            errors.append(err.numpy()[0])
-            img = torch.from_numpy(np.expand_dims(img, axis=0)).float()
-            pred = conf_model(img)
-            error_predictions.append(float(pred))
+    for i in range(len(test_data)):
+        img, err, ip, tp = test_data[i]
+        errors.append(err.numpy()[0])
+        img = torch.from_numpy(np.expand_dims(img, axis=0)).float()
+        pred = conf_model(img)
+        error_predictions.append(float(pred))
 
     # Save errors+error_predictions
     error_predictions_np = np.array(error_predictions)
-    np.save(f"{BASE_PATH}/Variables/{organelle}_Error_Predictions.npy",
-            error_predictions_np)
+    np.save(f"{BASE_PATH}/variables/{organelle}_Error_Predictions.npy", error_predictions_np)
     errors_np = np.array(errors)
-    np.save(f"{BASE_PATH}/Variables/{organelle}_Errors.npy", errors_np)
+    np.save(f"{BASE_PATH}/variables/{organelle}_Errors.npy", errors_np)
