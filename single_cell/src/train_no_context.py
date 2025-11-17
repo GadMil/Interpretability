@@ -10,11 +10,14 @@ import numpy as np
 import pandas as pd
 from torch.utils.data import DataLoader
 
-from dataset_no_context import DataGen
-from models.MaskGenerator_No_Context import MaskGenerator
-from models.UNETO_CELTIC import UNet3D
-from models.fnet_model import CELTICModel
-from transforms import normalize, normalize_with_mask, Propper
+project_root = os.path.abspath("..")
+sys.path.append(project_root)
+
+from src.dataset_no_context import DataGen
+from src.models.MaskGenerator_No_Context import MaskGenerator
+from src.models.UNETO_CELTIC import UNet3D
+from src.models.fnet_model import CELTICModel
+from src.transforms import normalize, normalize_with_mask, Propper
 
 
 # --- Configuration ---
@@ -22,15 +25,13 @@ CONTINUE_TRAINING = True
 weighted_pcc = False
 signals_are_masked = True
 organelle = sys.argv[1]
-organelle_path = organelle.lower()
 
-BASE_PATH = f'/{"/".join(os.getcwd().split("/")[1:-1])}'
-RESOURCES_PATH = BASE_PATH + "/resources/resources"
-unet_model_path = f"{RESOURCES_PATH}/{organelle}/models/best_model_no_context.p"
-mg_model_path = f"{BASE_PATH}/mg/No_Context/{organelle}/model.pt"
-data_path = f"/sise/assafzar-group/assafzar/Nitsan/hipsc_single_cell_image_dataset/{organelle_path}/fov_processed/cells/source/"
-train_csv_path = f"{RESOURCES_PATH}/{organelle}/metadata/train_images.csv"
-validation_csv_path = f"{RESOURCES_PATH}/{organelle}/metadata/valid_images.csv"
+BASE_PATH = os.path.dirname(os.getcwd())
+unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/best_model_no_context.p"
+mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/model_context.pt"
+data_path = f"{BASE_PATH}/data/{organelle}/cells"
+test_csv_path = f"{BASE_PATH}/data/{organelle}/metadata/test_images.csv"
+validation_csv_path = f"{BASE_PATH}/data/{organelle}/metadata/valid_images.csv"
 patch_size = (32, 64, 64, 1)
 
 
@@ -121,7 +122,8 @@ for mw in [0.9]:
                                    pcc_target=pcc_target, noise_scale=noise)
                 
                 if CONTINUE_TRAINING and os.path.exists(f"{mg_model_path[:-3]}_mw_{mw}_lr_{lr}_pcc_{pcc_target}_noise_{noise}.pt"):
-                    mg.load_state_dict(torch.load(f"{mg_model_path[:-3]}_mw_{mw}_lr_{lr}_pcc_{pcc_target}_noise_{noise}.pt"))
+                    mg.load_state_dict(torch.load(f"{mg_model_path[:-3]}_mw_{mw}_lr_{lr}_pcc_{pcc_target}_noise_{noise}.pt",
+                                                  map_location=device))
                 
                 # === Training Setup ===
                 mg.to(device)

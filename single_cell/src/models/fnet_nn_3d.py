@@ -1,6 +1,6 @@
 # Modified version of the code from https://github.com/AllenCellModeling/pytorch_fnet/tree/release_1
 
-from models.fnet_nn_3d_params import Net
+from src.models.fnet_nn_3d_params import Net
 
 class Net(Net):
     def __init__(self, context, signals_are_masked):

@@ -5,7 +5,7 @@ import numpy as np
 from torch.nn import MSELoss
 from torch.cuda.amp import autocast, GradScaler
 
-from metrics import pearson_corr_torch
+from src.metrics import pearson_corr_torch
 
 
 class MaskGenerator(nn.Module):
