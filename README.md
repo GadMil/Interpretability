@@ -62,13 +62,13 @@ cd Interpretability
 cd single_cell
 conda create -n single_cell python=3.9.15
 conda activate single_cell
-pip install -r requirements_windows.txt
+pip install -r requirements.txt
 
 # --- Confidence model ---
 cd ../interpretability
 conda create -n confidence python=3.10.14
 conda activate confidence
-pip install -r requirements_windows.txt
+pip install -r requirements.txt
 ```
 
 ---
