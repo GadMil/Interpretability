@@ -25,17 +25,17 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
   - *Example applications* that can be performed using this method.
 ---
 
+## Structure  & Necessary Folders (TODO)
+
 ## Data (TODO)
 
 - **`interpretability/` dataset**  
   - Paired unlabeled→labeled microscopy volumes for in silico labeling (e.g., brightfield → fluorescence).  
   - Trained to produce **importance masks** explaining in silico labeling predictions; supports 2D/3D.  
-  - Data layout, normalization, and configs in `interpretability/README.md`.
 
 - **`single_cell/` dataset**  
   - 3D **z-stacks**, per-cell patches (e.g., 128×128 XY), targets derived from correlation/quality metrics.  
   - Typical sample contains: prediction volume, (optional) importance mask volume, and per-cell target(s).  
-  - Folder structure and preprocessing scripts described in `single_cell/README.md`.
 
 ---
 
@@ -85,8 +85,6 @@ If you use this **code** or **data**, please **cite** the associated paper and t
 }
 ```
 
-Credits and dataset attributions are listed in each sub-README.
-
 ---
 
 ## Repository Layout
@@ -102,4 +100,4 @@ Credits and dataset attributions are listed in each sub-README.
 ---
 
 **License & Contact**  
-See `LICENSE` in main folder. For questions or collaboration, open an issue or contact the maintainer listed in the sub-READMEs.
+See `LICENSE` in main folder. For questions or collaboration, open an issue or contact...
