@@ -20,11 +20,11 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
 - A `requirements.txt` resides **inside each project folder**.
 - Recommended: Isolated venv per folder:
   ```bash
-  cd single_cell
+  cd interpretability
   python -m venv .venv && source .venv/bin/activate
   pip install -r requirements.txt
   ```
-  (repeat for `interpretability/`)
+  (repeat for `single_cell/`)
 - Paths are configured per project. TODO: explain this.
 
 ### Brief research & code overview
@@ -39,15 +39,15 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
 
 ## Data (TODO)
 
-- **`single_cell/` dataset**  
-  - 3D **z-stacks**, per-cell patches (e.g., 128×128 XY), targets derived from correlation/quality metrics.  
-  - Typical sample contains: prediction volume, (optional) importance mask volume, and per-cell target(s).  
-  - Folder structure and preprocessing scripts described in `single_cell/README.md`.
-
 - **`interpretability/` dataset**  
   - Paired unlabeled→labeled microscopy volumes for ISL (e.g., brightfield → fluorescence), plus optional context.  
   - Trained to produce **importance masks** explaining ISL predictions; supports 2D/3D.  
   - Data layout, normalization, and configs in `interpretability/README.md`.
+
+- **`single_cell/` dataset**  
+  - 3D **z-stacks**, per-cell patches (e.g., 128×128 XY), targets derived from correlation/quality metrics.  
+  - Typical sample contains: prediction volume, (optional) importance mask volume, and per-cell target(s).  
+  - Folder structure and preprocessing scripts described in `single_cell/README.md`.
 
 ---
 
@@ -58,16 +58,16 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
 git clone https://github.com/GadMil/Interpretability
 cd Interpretability
 
-# --- Single-cell model ---
-cd single_cell
-conda create -n single_cell python=3.9.15
-conda activate single_cell
-pip install -r requirements.txt
-
 # --- Confidence model ---
 cd ../interpretability
 conda create -n confidence python=3.10.14
 conda activate confidence
+pip install -r requirements.txt
+
+# --- Single-cell model ---
+cd single_cell
+conda create -n single_cell python=3.9.15
+conda activate single_cell
 pip install -r requirements.txt
 ```
 
