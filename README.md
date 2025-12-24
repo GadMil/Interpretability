@@ -10,8 +10,8 @@
 
 This repository hosts two tightly related but **separable** projects:
 
-- **`single_cell/`** — Single-cell confidence model that predicts per-cell error/quality for ISL outputs using 3D patches.  
 - **`interpretability/`** — Patch level confidence for ISL with detailed analysis pipelines.
+- **`single_cell/`** — Single-cell confidence model that predicts per-cell error/quality for ISL outputs using 3D patches.  
 
 Each folder has **its own Python environment** and **paths/configs**. Keep them isolated.
 
