@@ -15,6 +15,8 @@ This repository hosts two tightly related but **separable** projects:
 
 Each folder has **its own Python environment** and **paths/configs**. Keep them isolated.
 
+In addition, this repository is part of a research paper done by the Zaritsky Lab of Computational Dynamics that is set to be published. This research is done in collaboration with Lion Ben Nedava and his work can be found here: https://github.com/lionben89/cell_generator/tree/MaskInterpreter2.0.
+
 ### Brief research & code overview
 
 - **Goal**: Quantify confidence for in silico labeling predictions and provide a tool for for deciding which predictions are reliable for biological analysis.  
