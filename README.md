@@ -90,17 +90,5 @@ If you use this **code** or **data**, please **cite** the associated paper and t
 
 ---
 
-## Repository Layout
-
-```
-.
-├─ README.md                # (this file)
-├─ README_Figures/                  # figures used by README (e.g., overview.png)
-├─ single_cell/             # single-cell confidence model
-└─ interpretability/        # mask-based interpretability
-```
-
----
-
 **License & Contact**  
 See `LICENSE` in main folder. For questions or collaboration, open an issue or contact...
