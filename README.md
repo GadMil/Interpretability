@@ -1,6 +1,7 @@
 # Confidence Prediction for In-Silico Labeling
-
-<img src="images/overview.png" alt="Project overview" width="520"/>
+<p align="center">
+  <img src="images/overview.png" alt="Project overview" width="520"/>
+</p>
 
 [Preprint (TODO)](#)
 
