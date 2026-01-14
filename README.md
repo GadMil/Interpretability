@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 ---
 
-## Citation & Credit (compact) TODO
+## Citation & Credit (TODO)
 
 If you use this **code** or **data**, please **cite** the associated paper and this repository.
 
