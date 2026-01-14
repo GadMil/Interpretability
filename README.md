@@ -1,4 +1,4 @@
-# ISL-Confidence: Single-Cell Confidence & Interpretability for In-Silico Labeling
+# Confidence Prediction for In-Silico Labeling
 
 <img src="images/overview.png" alt="Project overview" width="520"/>
 
@@ -10,44 +10,32 @@
 
 This repository hosts two tightly related but **separable** projects:
 
-- **`single_cell/`** — Single-cell confidence model that predicts per-cell error/quality for ISL outputs using 3D patches.  
-- **`interpretability/`** — Patch level confidence for ISL with detailed analysis pipelines.
+- **`interpretability/`** — Patch level confidence model for in silico labeling with detailed analysis pipelines.
+- **`single_cell/`** — Single-cell model for in silico labeling prediction and visual explanation generation.  
 
 Each folder has **its own Python environment** and **paths/configs**. Keep them isolated.
 
-### Environments & Paths (per folder)
-
-- A `requirements.txt` resides **inside each project folder**.
-- Recommended: Isolated venv per folder:
-  ```bash
-  cd single_cell
-  python -m venv .venv && source .venv/bin/activate
-  pip install -r requirements.txt
-  ```
-  (repeat for `interpretability/`)
-- Paths are configured per project. TODO: explain this.
-
 ### Brief research & code overview
 
-- **Goal**: Quantify **uncertainty at single-cell resolution** for ISL predictions and provide **faithful explanations** for why predictions succeed/fail.  
-- **Significance**: Improves trust, troubleshooting, and deployment of ISL in biological imaging by telling **where** and **why** a prediction is reliable.  
+- **Goal**: Quantify confidence for in silico labeling predictions and provide a tool for for deciding which predictions are reliable for biological analysis.  
+- **Significance**: Improves trust and deployment of in silico labeling in biological imaging by telling **where** and **why** a prediction is reliable.  
 - **Key features**
-  - *3D confidence model* that ingests ISL predictions + explanation masks and regresses a per-cell/per-patch quality/error target (e.g., PCC-derived).
+  - *3D confidence model* that ingests in silico labeling predictions + explanation masks and regresses a per-cell/per-patch quality/error target.
   - *Detailed analysis* to understand cell-level or FOV-level mistakes.
-  - *Useful applications* that can be performed using this method.
+  - *Example applications* that can be performed using this method.
 ---
 
+## Structure  & Necessary Folders (TODO)
+
 ## Data (TODO)
+
+- **`interpretability/` dataset**  
+  - Paired unlabeled→labeled microscopy volumes for in silico labeling (e.g., brightfield → fluorescence).  
+  - Trained to produce **importance masks** explaining in silico labeling predictions; supports 2D/3D.  
 
 - **`single_cell/` dataset**  
   - 3D **z-stacks**, per-cell patches (e.g., 128×128 XY), targets derived from correlation/quality metrics.  
   - Typical sample contains: prediction volume, (optional) importance mask volume, and per-cell target(s).  
-  - Folder structure and preprocessing scripts described in `single_cell/README.md`.
-
-- **`interpretability/` dataset**  
-  - Paired unlabeled→labeled microscopy volumes for ISL (e.g., brightfield → fluorescence), plus optional context.  
-  - Trained to produce **importance masks** explaining ISL predictions; supports 2D/3D.  
-  - Data layout, normalization, and configs in `interpretability/README.md`.
 
 ---
 
@@ -58,16 +46,16 @@ Each folder has **its own Python environment** and **paths/configs**. Keep them 
 git clone https://github.com/GadMil/Interpretability
 cd Interpretability
 
-# --- Single-cell model ---
-cd single_cell
-conda create -n single_cell python=3.9.15
-conda activate single_cell
-pip install -r requirements.txt
-
 # --- Confidence model ---
 cd ../interpretability
 conda create -n confidence python=3.10.14
 conda activate confidence
+pip install -r requirements.txt
+
+# --- Single-cell model ---
+cd single_cell
+conda create -n single_cell python=3.9.15
+conda activate single_cell
 pip install -r requirements.txt
 ```
 
@@ -97,8 +85,6 @@ If you use this **code** or **data**, please **cite** the associated paper and t
 }
 ```
 
-Credits and dataset attributions are listed in each sub-README.
-
 ---
 
 ## Repository Layout
@@ -114,4 +100,4 @@ Credits and dataset attributions are listed in each sub-README.
 ---
 
 **License & Contact**  
-See `LICENSE` in main folder. For questions or collaboration, open an issue or contact the maintainer listed in the sub-READMEs.
+See `LICENSE` in main folder. For questions or collaboration, open an issue or contact...
