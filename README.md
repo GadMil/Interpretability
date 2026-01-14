@@ -2,7 +2,7 @@
 
 <img src="images/overview.png" alt="Project overview" width="520"/>
 
-[Paper / preprint](#)
+[Preprint (TODO)](#)
 
 ---
 
