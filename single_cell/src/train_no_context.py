@@ -28,9 +28,9 @@ organelle = sys.argv[1]
 
 BASE_PATH = os.path.dirname(os.getcwd())
 unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/best_model_no_context.p"
-mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/model_context.pt"
+mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/model_no_context.pt"
 data_path = f"{BASE_PATH}/data/{organelle}/cells"
-test_csv_path = f"{BASE_PATH}/data/{organelle}/metadata/test_images.csv"
+train_csv_path = f"{BASE_PATH}/data/{organelle}/metadata/train_images.csv"
 validation_csv_path = f"{BASE_PATH}/data/{organelle}/metadata/valid_images.csv"
 patch_size = (32, 64, 64, 1)
 

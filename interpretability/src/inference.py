@@ -124,7 +124,7 @@ BASE_PATH = os.path.dirname(os.getcwd())
 organelle = sys.argv[1]
 unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/"
 mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/"
-conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/model.pt"
+conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/conf_model.pt"
 test_csv_path = f"{BASE_PATH}/data/{organelle}/image_list_test.csv"
 
 input_channel=0
@@ -146,7 +146,13 @@ stride_z = 16
 stride_xy = 32
 
 test_csv = pd.read_csv(test_csv_path)
+save_folder = f"{BASE_PATH}/inference/{organelle}"
+if not os.path.exists(save_folder):
+    os.makedirs(save_folder)
+    
 for path in test_csv['path_tiff']:
+    path = path.replace('Interpretability/interpretability', "")
+    path = BASE_PATH + '/' + path.split('//')[1]
     image = tiff.imread(path)
     image_num = path.split('.')[0].split('_')[-1]
 
@@ -234,4 +240,4 @@ for path in test_csv['path_tiff']:
 
     # Stack into one (3, Z, X, Y) array
     stack = np.stack([prediction, importance_map, confidence_map], axis=0)
-    tiff.imwrite(f"{BASE_PATH}/inference/{organelle}/image_{image_num}_inference_outputs.tiff", stack.astype(np.float32))
+    tiff.imwrite(f"{save_folder}/image_{image_num}_inference_outputs.tiff", stack.astype(np.float32))

@@ -208,79 +208,69 @@ test_transforms = transforms.Compose([
 
 
 class RegressionTestDataset(Dataset):
-    """
-    This class inherits from pytorch Dataset and defines basic functions that are
-    needed for using pycharm operations on our data.
-    """
+        """
+        This class inherits from pytorch Dataset and defines basic functions that are
+        needed for using pycharm operations on our data.
+        """
+        def __init__(self, csv_path, indices, transform=None, min_=0.0, max_=1.0):
+            self.df = pd.read_csv(csv_path) # CSV with image locations
+            self.indices = indices
+            self.transform = transform # list of transformations on the data
+            self.min_ = min_
+            self.max_ = max_
+            self.patches_from_image = 54 # Patches from test image
 
-    def __init__(self, csv_path, indices, transform=None, min_=0.0, max_=1.0):
-        self.df = pd.read_csv(csv_path)  # CSV with image locations
-        self.indices = indices
-        self.transform = transform  # list of transformations on the data
-        self.min_ = min_
-        self.max_ = max_
-        # self.curr_index = 0
-        self.patches_from_image = 54  # Patches from test image
+        def __len__(self):
+            # Total patches for selected images
+            num_selected_images = math.ceil((self.max_ - self.min_) * len(self.df))
+            return num_selected_images * self.patches_from_image
 
-    def __len__(self):
-        # Total patches for selected images
-        num_selected_images = math.ceil((self.max_ - self.min_) * len(self.df))
-        return num_selected_images * self.patches_from_image
+        def __getitem__(self, index):
+            if index >= len(self):
+                raise IndexError("Index out of range")
 
-    def __getitem__(self, index):
-        if index >= len(self):
-            raise IndexError("Index out of range")
+            # Calculate which image and patch to access directly
+            num_selected_images = math.ceil((self.max_ - self.min_) * len(self.df))
+            start_idx = math.floor(len(self.df) * self.min_)
 
-        # Calculate which image and patch to access directly
-        num_selected_images = math.ceil((self.max_ - self.min_) * len(self.df))
-        start_idx = math.floor(len(self.df) * self.min_)
+            # Compute image index and patch index from the given dataset index
+            image_idx = start_idx + (index // self.patches_from_image) % num_selected_images
+            patch_idx = index % self.patches_from_image
 
-        # Compute image index and patch index from the given dataset index
-        image_idx = start_idx + (index // self.patches_from_image) % num_selected_images
-        patch_idx = index % self.patches_from_image
+            # Load the correct image
+            path = self.df.loc[image_idx, 'path_tiff']
+            path = path.replace('Interpretability/interpretability', "")
+            path = BASE_PATH + '/' + path.split('//')[1]
+            image = np.array(tiff.imread(path))
+            input_image = image[input_channel, :, :, :]
+            target_image = image[target_channel, :, :, :]
 
-        # Load the correct image
-        image = np.array(tiff.imread(self.df.loc[image_idx, 'path_tiff']))
-        input_image = image[input_channel, :, :, :]
-        target_image = image[target_channel, :, :, :]
+            # Apply normalization
+            input_image = normalize_std(input_image)
 
-        # if self.transform:
-        #     input_image = self.transform(input_image)
+            # Access the specific patch
+            sx, sy = self.indices[patch_idx]  # Directly map to the correct indices
+            input_patch, target_patch = get_patch(input_image, target_image, sx, sy)
 
-        # Apply normalization
-        input_image = normalize_std(input_image)
+            input_patch = np.expand_dims(input_patch, axis=-1)
+            input_patch = np.expand_dims(input_patch, axis=0)
+            target_patch = np.expand_dims(target_patch, axis=-1)
+            target_patch = np.expand_dims(target_patch, axis=0)
 
-        # Access the specific patch
-        sx, sy = self.indices[patch_idx]  # Directly map to the correct indices
-        input_patch, target_patch = get_patch(input_image, target_image, sx, sy)
+            target_prediction = unet(input_patch)
+            mask_prediction = mg.generator([input_patch, target_prediction]) # Check if casting is needed
+            error_rate = 1 - abs(tf_pearson_corr(target_prediction, tf.cast(target_patch, tf.float64)))
+            error_rate = tf.where(tf.math.is_nan(error_rate), tf.zeros_like(error_rate), error_rate)
 
-        # sx = self.indices[self.curr_index][0]
-        # sy = self.indices[self.curr_index][1]
-        # input_patch, target_patch = get_patch(input_image, target_image, sx, sy)
-        # if self.curr_index < self.patches_from_image:
-        #     self.curr_index += 1
-        # else:
-        #     self.curr_index = 0
+            mask_prediction = mask_prediction.numpy()
+            combined_input = np.concatenate([target_prediction, mask_prediction], axis=-1)
 
-        input_patch = np.expand_dims(input_patch, axis=-1)
-        input_patch = np.expand_dims(input_patch, axis=0)
-        target_patch = np.expand_dims(target_patch, axis=-1)
-        target_patch = np.expand_dims(target_patch, axis=0)
+            combined_input = torch.from_numpy(combined_input).float()
+            combined_input = combined_input.permute(0, 4, 1, 2, 3)
+            combined_input = combined_input.squeeze(0)
+            error_rate = torch.tensor([error_rate.numpy()], dtype=torch.float32)
 
-        target_prediction = unet(input_patch)
-        mask_prediction = mg.generator([input_patch, target_prediction])  # Check if casting is needed
-        error_rate = 1 - abs(tf_pearson_corr(target_prediction, tf.cast(target_patch, tf.float64)))
-        error_rate = tf.where(tf.math.is_nan(error_rate), tf.zeros_like(error_rate), error_rate)
-
-        mask_prediction = mask_prediction.numpy()
-        combined_input = np.concatenate([target_prediction, mask_prediction], axis=-1)
-
-        combined_input = torch.from_numpy(combined_input).float()
-        combined_input = combined_input.permute(0, 4, 1, 2, 3)
-        combined_input = combined_input.squeeze(0)
-        error_rate = torch.tensor([error_rate.numpy()], dtype=torch.float32)
-
-        return combined_input, error_rate, input_patch, target_patch
+            return combined_input, error_rate, input_patch, target_patch
 
 
 class ResNet3DRegression(nn.Module):
@@ -333,10 +323,15 @@ BASE_PATH = os.path.dirname(os.getcwd())
 # Variable Paths
 organelles = ["Mitochondria", "Nucleolus-(Granular-Component)", "Nuclear-envelope", "Actin-filaments", "Microtubules",
               "Plasma-membrane", "Endoplasmic-reticulum", "DNA"]
+
+save_folder = f"{BASE_PATH}/variables"
+if not os.path.exists(save_folder):
+    os.makedirs(save_folder)
+    
 for organelle in organelles:
     unet_model_path = f"{BASE_PATH}/models/unet/{organelle}/"
     mg_model_path = f"{BASE_PATH}/models/mg/{organelle}/"
-    conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/model.pt"
+    conf_model_path = f"{BASE_PATH}/models/confidence/{organelle}/conf_model.pt"
     test_csv_path = f"{BASE_PATH}/data/{organelle}/image_list_test.csv"
 
     input_channel=0
