@@ -29,9 +29,7 @@ In addition, this repository is part of a research paper done by the Zaritsky La
 </p>
 
 ---
-## Structure  & Necessary Folders (TODO)
-
-## Data (TODO)
+## Data
 
 - **`interpretability/` dataset**  
   - Paired unlabeled→labeled microscopy volumes for in silico labeling (e.g., brightfield → fluorescence).  
