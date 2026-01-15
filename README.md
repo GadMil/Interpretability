@@ -19,7 +19,7 @@ In addition, this repository is part of a research paper done by the Zaritsky La
 - **Goal**: Quantify confidence for in silico labeling predictions and provide a tool for for deciding which predictions are reliable for biological analysis.  
 - **Significance**: Improves trust and deployment of in silico labeling in biological imaging by telling **where** and **why** a prediction is reliable.  
 - **Key features**
-  - *3D confidence model* that ingests in silico labeling predictions + explanation masks and regresses a per-cell/per-patch quality/error target.
+  - *3D confidence model* that ingests in silico labeling predictions + explanation masks and regresses a per-cell/per-patch quality target.
   - *Detailed analysis* to understand cell-level or FOV-level mistakes.
   - *Example applications* that can be performed using this method.
 
