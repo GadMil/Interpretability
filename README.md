@@ -33,17 +33,18 @@ In addition, this repository is part of a research paper done by the Zaritsky La
 
 - **`Confidence`**  
   - Paired unlabeled→labeled microscopy volumes for in silico labeling (e.g., brightfield → fluorescence).  
-  - Trained to produce **importance masks** explaining in silico labeling predictions; supports 2D/3D.
+  - Trained to produce confidence scores for in silico labeling predictions; can be used in 2D/3D.
   - We provide sample data for the nuclear envelope and suitable models in the "confidence data" and "confidence models" folders here:     https://drive.google.com/drive/u/0/folders/1hph8I6x4LdCaC2cbFjj9emrgGqDD2L98.
-  - The data should be downloaded and added to to appropriate folder (interpretability/data/Nuclear-envelope). The folders under "confidence models" should be downloaded and added to a new folder named models (interpretability/models).
+  - The data should be downloaded and added to to appropriate folder (interpretability/data/Nuclear-envelope). The folders under "confidence models" (unet, mg, confidence) should be downloaded and added under a new folder named models (interpretability/models).
   - Full data used in this paper can be downloaded from the Allen Institute for Cell Science: https://www.allencell.org/data-downloading.html#sectionLabelFreeTrainingData.
   - If the goal is to replicate results full data should be downloaded and csv files in the data folder should be updated. If the goal is to understand the method we recommend downloading the sample data and using the Jupyter Notebooks to follow the pipeline.
 
 - **`Single Cell/`**  
-  - 3D **z-stacks**, per-cell patches (e.g., 128×128 XY), targets derived from correlation/quality metrics.  
-  - Typical sample contains: prediction volume, (optional) importance mask volume, and per-cell target(s).
+  - Paired unlabeled→labeled microscopy volumes for in silico labeling, in the single cell resolution.  
+  - Typical sample contains: label-free volume, cell mask and fluorescense volume.
+  - Trained to produce importance masks for an organelle in a single cell.
   - We provide sample data for the nuclear envelope as part of the repository. Suitable models can be downloaded from the "single cell models" folder here:     https://drive.google.com/drive/u/0/folders/1hph8I6x4LdCaC2cbFjj9emrgGqDD2L98.
-  - The folders under "single cell models" should be downloaded and added to a new folder named models (single_cell/models).
+  - The folders under "single cell models" (unet, mg) should be downloaded and added under a new folder named models (single_cell/models).
   - This work is based on the work of Nitsan Elmalam. Further training instructions, examples and access to full data are well documented here: https://github.com/zaritskylab/CELTIC/tree/main.
   - If the goal is to replicate results full data should be downloaded and csv files in the data folder should be updated. If the goal is to understand the method we recommend using the Jupyter Notebooks to follow the pipeline.
 
