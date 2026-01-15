@@ -100,4 +100,4 @@ If you use this **code** or **data**, please **cite** the associated paper and t
 ---
 
 **License**  
-This repository (data, documentation, and figures) is intended for academic and research use, and is licensed under CC BY-NC 4.0. See LICENSE for details.
+This repository (data, documentation, and figures) is intended for academic and research use, and is licensed under CC BY-NC 4.0. See [License](LICENSE) for details.
