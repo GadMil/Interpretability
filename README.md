@@ -57,13 +57,13 @@ git clone https://github.com/GadMil/Interpretability
 cd Interpretability
 
 # --- Confidence model ---
-cd ../interpretability
+cd interpretability
 conda create -n confidence python=3.10.14
 conda activate confidence
 pip install -r requirements.txt
 
 # --- Single-cell model ---
-cd single_cell
+cd ../single_cell
 conda create -n single_cell python=3.9.15
 conda activate single_cell
 pip install -r requirements.txt
