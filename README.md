@@ -54,7 +54,7 @@ In addition, this repository is part of a research paper done by the Zaritsky La
 
 ```bash
 # Clone the repository
-git clone https://github.com/GadMil/Interpretability
+git clone https://github.com/zaritskylab/Interpretability
 cd Interpretability
 
 # --- Confidence model ---
