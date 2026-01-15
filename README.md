@@ -31,7 +31,7 @@ In addition, this repository is part of a research paper done by the Zaritsky La
 ---
 ## Models, Data & Access
 
-- **`Confidence`**  
+- **`interpretability/`**  
   - Paired unlabeled→labeled microscopy volumes for in silico labeling (e.g., brightfield → fluorescence).  
   - Trained to produce confidence scores for in silico labeling predictions; can be used in 2D/3D.
   - We provide sample data for the nuclear envelope and suitable models in the "confidence data" and "confidence models" folders here:     https://drive.google.com/drive/u/0/folders/1hph8I6x4LdCaC2cbFjj9emrgGqDD2L98.
@@ -39,7 +39,7 @@ In addition, this repository is part of a research paper done by the Zaritsky La
   - Full data used in this paper can be downloaded from the Allen Institute for Cell Science: https://www.allencell.org/data-downloading.html#sectionLabelFreeTrainingData.
   - If the goal is to replicate results full data should be downloaded and csv files in the data folder should be updated. If the goal is to understand the method we recommend downloading the sample data and using the Jupyter Notebooks to follow the pipeline.
 
-- **`Single Cell/`**  
+- **`single_Cell/`**  
   - Paired unlabeled→labeled microscopy volumes for in silico labeling, in the single cell resolution.  
   - Typical sample contains: label-free volume, cell mask and fluorescense volume.
   - Trained to produce importance masks for an organelle in a single cell.
