@@ -29,15 +29,23 @@ In addition, this repository is part of a research paper done by the Zaritsky La
 </p>
 
 ---
-## Data
+## Models, Data & Access
 
-- **`interpretability/` dataset**  
+- **`Confidence`**  
   - Paired unlabeled→labeled microscopy volumes for in silico labeling (e.g., brightfield → fluorescence).  
-  - Trained to produce **importance masks** explaining in silico labeling predictions; supports 2D/3D.  
+  - Trained to produce **importance masks** explaining in silico labeling predictions; supports 2D/3D.
+  - We provide sample data for the nuclear envelope and suitable models in the "confidence data" and "confidence models" folders here:     https://drive.google.com/drive/u/0/folders/1hph8I6x4LdCaC2cbFjj9emrgGqDD2L98.
+  - The data should be downloaded and added to to appropriate folder (interpretability/data/Nuclear-envelope). The folders under "confidence models" should be downloaded and added to a new folder named models (interpretability/models).
+  - Full data used in this paper can be downloaded from the Allen Institute for Cell Science: https://www.allencell.org/data-downloading.html#sectionLabelFreeTrainingData.
+  - If the goal is to replicate results full data should be downloaded and csv files in the data folder should be updated. If the goal is to understand the method we recommend downloading the sample data and using the Jupyter Notebooks to follow the pipeline.
 
-- **`single_cell/` dataset**  
+- **`Single Cell/`**  
   - 3D **z-stacks**, per-cell patches (e.g., 128×128 XY), targets derived from correlation/quality metrics.  
-  - Typical sample contains: prediction volume, (optional) importance mask volume, and per-cell target(s).  
+  - Typical sample contains: prediction volume, (optional) importance mask volume, and per-cell target(s).
+  - We provide sample data for the nuclear envelope as part of the repository. Suitable models can be downloaded from the "single cell models" folder here:     https://drive.google.com/drive/u/0/folders/1hph8I6x4LdCaC2cbFjj9emrgGqDD2L98.
+  - The folders under "single cell models" should be downloaded and added to a new folder named models (single_cell/models).
+  - This work is based on the work of Nitsan Elmalam. Further training instructions, examples and access to full data are well documented here: https://github.com/zaritskylab/CELTIC/tree/main.
+  - If the goal is to replicate results full data should be downloaded and csv files in the data folder should be updated. If the goal is to understand the method we recommend using the Jupyter Notebooks to follow the pipeline.
 
 ---
 
@@ -60,6 +68,8 @@ conda create -n single_cell python=3.9.15
 conda activate single_cell
 pip install -r requirements.txt
 ```
+
+After downloading sample data and models, cloning the repository and installing the packages, you should be able to run the pipeline on the sample data.
 
 ---
 
@@ -89,5 +99,5 @@ If you use this **code** or **data**, please **cite** the associated paper and t
 
 ---
 
-**License & Contact**  
-See `LICENSE` in main folder. For questions or collaboration, open an issue or contact...
+**License**  
+This repository (data, documentation, and figures) is intended for academic and research use, and is licensed under CC BY-NC 4.0. See LICENSE for details.
