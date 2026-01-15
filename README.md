@@ -38,6 +38,7 @@ In addition, this repository is part of a research paper done by the Zaritsky La
   - The data should be downloaded and added to to appropriate folder (interpretability/data/Nuclear-envelope). The folders under "confidence models" (unet, mg, confidence) should be downloaded and added under a new folder named models (interpretability/models).
   - Full data used in this paper can be downloaded from the Allen Institute for Cell Science: https://www.allencell.org/data-downloading.html#sectionLabelFreeTrainingData.
   - If the goal is to replicate results full data should be downloaded and csv files in the data folder should be updated. If the goal is to understand the method we recommend downloading the sample data and using the Jupyter Notebooks to follow the pipeline.
+  - "variables" folder includes confidence scores and true results vs the ground truth. These are used for creating the plots that appear in the "outputs" folder.
 
 - **`single_Cell/`**  
   - Paired unlabeled→labeled microscopy volumes for in silico labeling, in the single cell resolution.  
