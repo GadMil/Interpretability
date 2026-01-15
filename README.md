@@ -22,12 +22,12 @@ In addition, this repository is part of a research paper done by the Zaritsky La
   - *3D confidence model* that ingests in silico labeling predictions + explanation masks and regresses a per-cell/per-patch quality/error target.
   - *Detailed analysis* to understand cell-level or FOV-level mistakes.
   - *Example applications* that can be performed using this method.
----
 
 <p align="center">
   <img src="images/overview.png" alt="Project overview" width="520"/>
 </p>
 
+---
 ## Structure  & Necessary Folders (TODO)
 
 ## Data (TODO)
